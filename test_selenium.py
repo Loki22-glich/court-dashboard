@@ -1,26 +1,26 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-# Set path to your installed ChromeDriver
-service = Service('/opt/homebrew/bin/chromedriver')
-
+# Set Chrome options
 options = Options()
-# Not headless, so you can see it
-# options.add_argument('--headless')  ← make sure this line is commented or removed
+# options.add_argument('--headless')  # Uncomment only if needed later
+options.add_argument('--disable-gpu')
+options.add_argument('--no-sandbox')
 
-# Start the driver
-driver = webdriver.Chrome(service=service, options=options)
+# Use WebDriverManager to get the right driver
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-# Go to the Case Search page
+# Open the case search page
 driver.get("https://delhihighcourt.nic.in/case.asp")
 
-# Print the page title
+# Print page title
 print("Page Title:", driver.title)
 
-# ❗ Wait before closing the browser
-time.sleep(20)  # Keeps the browser open for 20 seconds
+# Wait for 30 seconds to keep browser open
+time.sleep(30)
 
-# Close the browser (you can comment this too if needed)
-# driver.quit()
+# Close browser after wait
+driver.quit()
