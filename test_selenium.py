@@ -1,22 +1,26 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+import time
 
-# Set ChromeDriver path
+# Set path to your installed ChromeDriver
 service = Service('/opt/homebrew/bin/chromedriver')
 
-# Open browser normally (no headless for now)
 options = Options()
-# options.add_argument('--headless')  ← comment this out for now
+# Not headless, so you can see it
+# options.add_argument('--headless')  ← make sure this line is commented or removed
 
-# Start driver
+# Start the driver
 driver = webdriver.Chrome(service=service, options=options)
 
-# Open case search page directly
+# Go to the Case Search page
 driver.get("https://delhihighcourt.nic.in/case.asp")
 
-# Print page title
+# Print the page title
 print("Page Title:", driver.title)
 
-# Comment this out temporarily so you can see the browser
+# ❗ Wait before closing the browser
+time.sleep(20)  # Keeps the browser open for 20 seconds
+
+# Close the browser (you can comment this too if needed)
 # driver.quit()
