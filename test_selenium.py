@@ -1,31 +1,36 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
 import time
 
-# Setup
-options = Options()
-# options.add_argument("--headless")  # Use this later for background automation
+# Optional: If you know where your geckodriver is, set it here:
+# service = Service("/opt/homebrew/bin/geckodriver")
 
+# Firefox options
+options = Options()
+# Comment out headless if you want to see the browser
+# options.add_argument("--headless")
+
+# Start Firefox browser
+# If you installed geckodriver with brew, you likely don't need to specify service
 driver = webdriver.Firefox(options=options)
 
-# Step 1: Open the Case Search Page
+# Load Delhi High Court search page
 driver.get("https://delhihighcourt.nic.in/case.asp")
 
-# Step 2: Fill the form fields
-driver.find_element("name", "ctype").send_keys("W.P. (C)")     # Case Type
-driver.find_element("name", "cno").send_keys("12345")          # Case Number
-driver.find_element("name", "cyear").send_keys("2023")         # Filing Year
+# Fill the form
+driver.find_element("name", "ctype").send_keys("W.P. (C)")
+driver.find_element("name", "cno").send_keys("12345")
+driver.find_element("name", "cyear").send_keys("2023")
 
-# Step 3: Submit the form
+# Click the submit button
 driver.find_element("xpath", "//input[@type='submit']").click()
 
-# Step 4: Wait to load results
+# Wait and print results
 time.sleep(5)
+print("Page title:", driver.title)
+print("URL:", driver.current_url)
 
-# Step 5: Print the new page title or URL
-print("After Search - Title:", driver.title)
-print("Current URL:", driver.current_url)
-
-# Optional: Wait before quitting
-time.sleep(20)
+# Keep the browser open to see output
+time.sleep(30)
 driver.quit()
