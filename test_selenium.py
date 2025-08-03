@@ -1,26 +1,31 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.options import Options
 import time
 
-# Set Chrome options
+# Setup
 options = Options()
-# options.add_argument('--headless')  # Uncomment only if needed later
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
+# options.add_argument("--headless")  # Use this later for background automation
 
-# Use WebDriverManager to get the right driver
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+driver = webdriver.Firefox(options=options)
 
-# Open the case search page
+# Step 1: Open the Case Search Page
 driver.get("https://delhihighcourt.nic.in/case.asp")
 
-# Print page title
-print("Page Title:", driver.title)
+# Step 2: Fill the form fields
+driver.find_element("name", "ctype").send_keys("W.P. (C)")     # Case Type
+driver.find_element("name", "cno").send_keys("12345")          # Case Number
+driver.find_element("name", "cyear").send_keys("2023")         # Filing Year
 
-# Wait for 30 seconds to keep browser open
-time.sleep(30)
+# Step 3: Submit the form
+driver.find_element("xpath", "//input[@type='submit']").click()
 
-# Close browser after wait
+# Step 4: Wait to load results
+time.sleep(5)
+
+# Step 5: Print the new page title or URL
+print("After Search - Title:", driver.title)
+print("Current URL:", driver.current_url)
+
+# Optional: Wait before quitting
+time.sleep(20)
 driver.quit()
