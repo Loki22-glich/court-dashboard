@@ -2,18 +2,21 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-# Use the correct chromedriver path
+# Set ChromeDriver path
 service = Service('/opt/homebrew/bin/chromedriver')
 
-# Optional: run in headless mode (no GUI)
+# Open browser normally (no headless for now)
 options = Options()
-options.add_argument("--headless")
+# options.add_argument('--headless')  ← comment this out for now
 
-# Create driver
+# Start driver
 driver = webdriver.Chrome(service=service, options=options)
 
-# Test: Open Delhi High Court site
-driver.get("https://delhihighcourt.nic.in/")
+# Open case search page directly
+driver.get("https://delhihighcourt.nic.in/case.asp")
+
+# Print page title
 print("Page Title:", driver.title)
 
-driver.quit()
+# Comment this out temporarily so you can see the browser
+# driver.quit()
