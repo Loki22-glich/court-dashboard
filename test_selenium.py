@@ -3,8 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 # Optional: adjust if you have chromedriver path
-service = Service('/usr/local/bin/chromedriver')
-
+service = Service('/opt/homebrew/bin/chromedriver')  
 # Start the Chrome browser
 driver = webdriver.Chrome(service=service)
 
